@@ -1,0 +1,49 @@
+{
+  "name": "document-reader-cordova",
+  "version": "0.1.0",
+  "description": "FacePlugin Document Reader SDK Cordova plugin (Android + iOS)",
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "files": [
+    "dist/",
+    "hooks/",
+    "lib/",
+    "plugin.xml",
+    "src/",
+    "www/"
+  ],
+  "author": "FacePlugin <info@faceplugin.com> (https://faceplugin.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faceplugin-ltd/ID-Document-Recognition-Ionic-Cordova.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Faceplugin-ltd/ID-Document-Recognition-Ionic-Cordova/issues"
+  },
+  "homepage": "https://github.com/Faceplugin-ltd/ID-Document-Recognition-Ionic-Cordova#readme",
+  "keywords": [
+    "cordova",
+    "plugin",
+    "ionic",
+    "document-reader",
+    "faceplugin"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "clean": "rimraf ./dist",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "~5.4.5"
+  },
+  "cordova": {
+    "id": "document-reader-cordova",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  }
+}

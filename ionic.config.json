@@ -1,0 +1,7 @@
+{
+  "name": "document-reader-cordova-demo",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "custom"
+}

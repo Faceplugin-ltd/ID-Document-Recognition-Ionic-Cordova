@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="document-reader-cordova"
+        version="0.1.0">
+  <name>DocumentReaderSdk</name>
+  <description>FacePlugin Document Reader SDK for Ionic Cordova</description>
+  <license>MIT</license>
+  <keywords>cordova,ionic,document-reader,faceplugin</keywords>
+
+  <js-module src="www/DocumentReaderSdk.js" name="DocumentReaderSdk">
+    <clobbers target="cordova.plugins.DocumentReaderSdk" />
+  </js-module>
+
+  <!-- Jetifier/heap/colors fixes for large AARs (after Cordova prepare). -->
+  <hook type="after_prepare" src="hooks/android_prepare.js" />
+  <hook type="before_build" src="hooks/android_prepare.js" />
+  <hook type="before_run" src="hooks/android_prepare.js" />
+  <!-- iOS: build-extras (team/bundle) + after_build nested framework re-sign. -->
+  <hook type="after_prepare" src="hooks/ios_prepare.js" />
+  <hook type="before_build" src="hooks/ios_prepare.js" />
+  <hook type="before_run" src="hooks/ios_prepare.js" />
+  <hook type="after_build" src="hooks/ios_prepare.js" />
+
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="DocumentReaderSdk">
+        <param name="android-package" value="com.documentreadersdk.DocumentReaderSdkPlugin"/>
+      </feature>
+      <preference name="AndroidXEnabled" value="true" />
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.CAMERA" />
+    </config-file>
+
+    <source-file src="src/android/DocumentReaderSdkPlugin.kt"
+                 target-dir="app/src/main/java/com/documentreadersdk" />
+    <source-file src="src/android/ImageUtils.kt"
+                 target-dir="app/src/main/java/com/documentreadersdk" />
+
+    <resource-file src="src/android/documentreadersdk.aar" target="libs/documentreadersdk.aar" />
+    <framework src="src/android/aarintegration.gradle" custom="true" type="gradleReference" />
+    <source-file src="src/android/build-extras.gradle" target-dir="." />
+  </platform>
+
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="DocumentReaderSdk">
+        <param name="ios-package" value="DocumentReaderSdkPlugin" />
+      </feature>
+    </config-file>
+    <header-file src="src/ios/DocSdkBridge.h" />
+    <header-file src="src/ios/DocumentReaderSdk-Bridging-Header.h" type="BridgingHeader" />
+    <source-file src="src/ios/DocSdkBridge.mm" compiler-flags="-std=c++17" />
+    <source-file src="src/ios/DocumentReaderSdkPlugin.swift" />
+    <!-- Place docsdk.framework under src/ios/Frameworks/ before `cordova platform add ios`. -->
+    <framework src="src/ios/Frameworks/docsdk.framework" custom="true" embed="true" link="true" />
+    <framework src="UIKit.framework" />
+    <framework src="AVFoundation.framework" />
+    <framework src="libc++.tbd" />
+  </platform>
+</plugin>
